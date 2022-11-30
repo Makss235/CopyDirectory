@@ -1,23 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CopyDirectory
 {
     internal class Program
     {
+        public static List<string> Folders = new List<string>()
+        {
+            "Resources",
+            "Python310",
+            "Speech"
+        };
 
+        static public string CopyFrom { get; } = Path.Combine(
+                Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().Location));
+        static public string CopyTo { get; } = Path.Combine(
+                Path.GetDirectoryName(Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().Location)), 
+                "SmartAssistant\\bin\\Debug\\net6.0-windows");
 
         static void Main(string[] args)
         {
-            Copy("D:\\Projects\\VS C#\\SmartAssistant\\Resources", 
-                 "D:\\Projects\\VS C#\\SmartAssistant\\SmartAssistant\\bin\\Debug\\net6.0-windows\\Resources");
-
-            Console.WriteLine();
-            Console.WriteLine("Copying completed: Resources");
+            Console.WriteLine(CopyFrom);
+            Console.WriteLine(CopyTo);
+            foreach (string folder in Folders)
+            {
+                Copy(Path.Combine(CopyFrom, folder), Path.Combine(CopyTo, folder));
+                Console.WriteLine($"Copying completed: {folder}");
+                Console.WriteLine();
+            }
         }
 
         public static void Copy(string sourceDirectory, string targetDirectory)
