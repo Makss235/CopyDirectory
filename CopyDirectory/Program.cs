@@ -10,7 +10,6 @@ namespace CopyDirectory
         public static List<string> Folders = new List<string>()
         {
             "Resources",
-            "Python310",
             "Speech"
         };
 
